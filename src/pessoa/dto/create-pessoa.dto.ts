@@ -9,11 +9,11 @@ import { Utils } from "src/app.utils";
 export class CreatePessoaDto {
 
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Nome')})
-    @IsString({message: 'Nome tem que ser texto'})    
+    @IsString()    
     nome: string;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Identificação')})
-    @IsString({message: 'identificacao tem que ser texto'})
+    @IsString()
     @Validate(identificacaoValidator)
     @ApenasNumeros()
     identificacao: string;
