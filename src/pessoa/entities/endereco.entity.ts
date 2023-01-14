@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { tipo_endereco } from "../enums/endereco.enum";
 import { Pessoa } from "./pessoa.entity";
 
@@ -7,9 +7,8 @@ export class Endereco{
     
     @PrimaryGeneratedColumn()
     id: number;
-    
-    @JoinColumn()
-    @ManyToOne(() => Pessoa)  
+     
+    @ManyToOne(() => Pessoa, (pessoa) => pessoa.enderecos)  
     pessoa: number;
     
     @Column({length: 9, nullable: false})
