@@ -1,7 +1,7 @@
 import { tipo_endereco } from "../enums/endereco.enum";
 
 export class UpdateEnderecoDto{
-    id: number;
+    id?: number;
     pessoa: number;
     cep?: string;
     logradouro?: string;
