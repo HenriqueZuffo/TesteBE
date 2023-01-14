@@ -11,6 +11,7 @@ export class PessoaService {
 
   async create(createPessoaDto: CreatePessoaDto) {
     createPessoaDto.identificacao = Utils.apenasNumeros(createPessoaDto.identificacao)
+    
     return this.pessoaRepository.create(createPessoaDto);
   }
 

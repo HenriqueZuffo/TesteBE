@@ -1,17 +1,19 @@
 import { IsEnum, IsNumber, IsString, IsNotEmpty, Length, IsOptional } from "class-validator";
 import { tipo_endereco } from "../enums/endereco.enum";
-import { ApenasNumeros } from "src/decorators/apenas-numeros.decorator";
 import { Utils } from "src/app.utils";
+import { Transform } from "class-transformer";
+
 
 export class CreateEnderecoDto{
     
+    @IsOptional()
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Id da Pessoa')})
     @IsNumber()
     pessoa: number;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Cep')})
     @IsString()
-    @ApenasNumeros()
+    @Transform(({ value }) => Utils.apenasNumeros(value))
     @Length(9, 9, {message: 'Cep inválido'})
     cep: string; 
     
@@ -30,7 +32,7 @@ export class CreateEnderecoDto{
     @IsOptional()
     @IsString()
     complemento: string;
-    
+     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Cidade')})
     @IsString()
     cidade: string;

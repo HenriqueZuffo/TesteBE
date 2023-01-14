@@ -24,7 +24,7 @@ export class PessoaController {
   async findAll() {
     const pessoas = await this.pessoaService.findAll();
 
-    if(!pessoas){
+    if(!pessoas || pessoas.length <= 0){
       throw new HttpException('Nenhuma pessoa foi encontrada!', HttpStatus.NOT_FOUND)
     }
 
@@ -54,7 +54,7 @@ export class PessoaController {
     if(!pessoa){
       throw new HttpException('Pessoa informada inválida!', HttpStatus.NOT_FOUND)
     }
-    
+
     updatePessoaDto.enderecos?.map(async end => 
       !end.id ? await this.enderecoService.create(id, end) : 
         await this.enderecoService.update(end.id, end)

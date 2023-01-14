@@ -1,10 +1,10 @@
 import { IsDate, IsEnum, IsIn, IsNotEmpty, IsString, Validate, IsNumber, IsOptional } from "class-validator";
 import { Utils } from "src/app.utils";
-import { ApenasNumeros } from "src/decorators/apenas-numeros.decorator";
 import { Endereco } from '../entities/endereco.entity';
 import { tipo_pessoa } from '../enums/pessoa.enum';
 import { DataNascimentoValidator } from "../validators/data-nascimento.validator";
 import { identificacaoValidator } from "../validators/identificacao.validator";
+import { Transform } from "class-transformer";
 
 export class UpdatePessoaDto{
     @IsNotEmpty()
@@ -19,8 +19,8 @@ export class UpdatePessoaDto{
     @IsOptional()
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Identificação')})
     @IsString()
+    @Transform(({ value }) => Utils.apenasNumeros(value))
     @Validate(identificacaoValidator)
-    @ApenasNumeros()
     identificacao: string;
     
     @IsOptional()

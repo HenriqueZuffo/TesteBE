@@ -1,6 +1,6 @@
 import { IsEnum, IsNumber, IsString, IsNotEmpty, Length, IsOptional } from "class-validator";
 import { Utils } from "src/app.utils";
-import { ApenasNumeros } from "src/decorators/apenas-numeros.decorator";
+import { Transform } from "class-transformer";
 import { tipo_endereco } from "../enums/endereco.enum";
 
 export class UpdateEnderecoDto{
@@ -15,7 +15,7 @@ export class UpdateEnderecoDto{
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    @ApenasNumeros()
+    @Transform(({ value }) => Utils.apenasNumeros(value))
     @Length(9, 9, {message: 'Cep inválido'})
     cep?: string;
     
