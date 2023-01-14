@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { tipo_pessoa } from "../enums/pessoa.enum";
 import { Endereco } from "./endereco.entity";
 
@@ -19,5 +19,6 @@ export class Pessoa {
     @Column({nullable: false})
     data_nascimento: Date;
     
+    @OneToMany(() => Endereco, (endereco) => endereco.pessoa)
     enderecos: Endereco[];
 }

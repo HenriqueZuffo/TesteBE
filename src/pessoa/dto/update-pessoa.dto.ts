@@ -1,5 +1,6 @@
 import { Endereco } from '../entities/endereco.entity';
 import { tipo_pessoa } from '../enums/pessoa.enum';
+import { UpdateEnderecoDto } from './update-endereco.dto';
 
 export class UpdatePessoaDto{
     nome?: string;
