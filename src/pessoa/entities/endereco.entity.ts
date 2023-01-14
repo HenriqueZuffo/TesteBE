@@ -8,7 +8,7 @@ export class Endereco{
     @PrimaryGeneratedColumn()
     id: number;
      
-    @ManyToOne(() => Pessoa, (pessoa) => pessoa.enderecos)  
+    @ManyToOne(() => Pessoa, (pessoa) => pessoa.enderecos, {nullable: false}) 
     pessoa: number;
     
     @Column({length: 9, nullable: false})
@@ -17,13 +17,13 @@ export class Endereco{
     @Column({nullable: false})
     logradouro: string;
     
-    @Column({nullable: false})
+    @Column({nullable: false}) 
     numero: number;
     
     @Column({nullable: false}) 
     bairro: string;
-
-    @Column() 
+ 
+    @Column({nullable: true})
     complemento: string;
     
     @Column({nullable: false})

@@ -15,9 +15,13 @@ export class PessoaController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createPessoaDto: CreatePessoaDto, res: Response) {
-    const id = await this.pessoaService.create(createPessoaDto)
-    createPessoaDto.enderecos?.map(async (end) => await this.enderecoService.create(id, end))
-    return id 
+    try{
+      const id = await this.pessoaService.create(createPessoaDto)
+      await createPessoaDto.enderecos?.map(async (end) => await this.enderecoService.create(id, end))
+      return id 
+    }catch(err){
+      res.status(HttpStatus.BAD_REQUEST).json(err)  
+    }
   }
 
   @Get()
