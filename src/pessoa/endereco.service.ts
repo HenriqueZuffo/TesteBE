@@ -16,7 +16,7 @@ export class EnderecoService{
     }
     
     async create(idPessoa: number, endereco: CreateEnderecoDto){
-        endereco.id_pessoa = idPessoa;
+        endereco.pessoa = idPessoa;
 
         return this.enderecoRepository.create(endereco)
     }

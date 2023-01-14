@@ -6,8 +6,12 @@ import { PessoaRepository } from './repositories/pessoa.repository';
 import { EnderecoRepository } from './repositories/endereco.repository';
 import { PostgresEnderecoRepository } from './repositories/Implementation/postgres-endereco.repository';
 import { EnderecoService } from './endereco.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Endereco } from './entities/endereco.entity';
+import { Pessoa } from './entities/pessoa.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Endereco, Pessoa])],
   controllers: [PessoaController],
   providers: [PessoaService, 
     {

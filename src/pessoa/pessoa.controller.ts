@@ -16,7 +16,7 @@ export class PessoaController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createPessoaDto: CreatePessoaDto, res: Response) {
     const id = await this.pessoaService.create(createPessoaDto)
-    createPessoaDto.enderecos.map(async (end) => await this.enderecoService.create(id, end))
+    createPessoaDto.enderecos?.map(async (end) => await this.enderecoService.create(id, end))
     return id 
   }
 
@@ -54,8 +54,15 @@ export class PessoaController {
     if(!pessoa){
       throw new HttpException('Pessoa informada inválida!', HttpStatus.NOT_FOUND)
     }
+    
+    updatePessoaDto.enderecos?.map(async end => 
+      !end.id ? await this.enderecoService.create(id, end) : 
+        await this.enderecoService.update(end.id, end)
+    )    
 
-    return await this.pessoaService.update(id, updatePessoaDto);
+    await this.pessoaService.update(id, updatePessoaDto);
+
+    return 
   }
 
   @Delete(':id')
