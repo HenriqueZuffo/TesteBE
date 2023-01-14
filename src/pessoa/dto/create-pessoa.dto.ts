@@ -1,11 +1,12 @@
-import { IsDate, IsEnum, IsIn, IsNotEmpty, IsString, Validate } from "class-validator";
+import { IsDate, IsEnum, IsNotEmpty, IsString, Validate, MinLength, ValidateNested } from "class-validator";
 import { Endereco } from "../entities/endereco.entity";
 import { tipo_pessoa } from "../enums/pessoa.enum";
 import { DataNascimentoValidator } from "../validators/data-nascimento.validator";
 import { identificacaoValidator } from "../validators/identificacao.validator";
 import { Utils } from "src/app.utils";
+import { Transform, Type } from "class-transformer";
+import { EnderecoValidator } from "../validators/endereco-validator.validator";
 import { CreateEnderecoDto } from "./create-endereco.dto";
-import { Transform } from "class-transformer";
 
 export class CreatePessoaDto {
 
@@ -24,11 +25,14 @@ export class CreatePessoaDto {
     tipo: tipo_pessoa;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Data de nascimento')})
+    @Transform(({value}) => new Date(value))
     @IsDate()
     @Validate(DataNascimentoValidator)
     data_nascimento: Date;
     
-    @IsNotEmpty({message: 'Obrigatório informar ao menos 1 endereço'})
-    @IsIn([CreateEnderecoDto], { each: true})
-    enderecos: Endereco[];    
+    @IsNotEmpty({message: 'Obrigatório informar endereço'})
+    @Type(() => CreateEnderecoDto)
+    @ValidateNested({each: true})
+    @Validate(EnderecoValidator)
+    enderecos: CreateEnderecoDto[];    
 }
