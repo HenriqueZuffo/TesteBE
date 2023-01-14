@@ -4,4 +4,8 @@ export abstract class Utils{
         return str.replace("/\D/g","");  
     }
 
+    public static mensagemObrigatorio(campo: string): string{
+        return `${campo} é obrigatório`
+    }
+
 }
