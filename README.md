@@ -1,5 +1,5 @@
 # Início
-Para rodar esta aplicação será necessário instalar as dependências, executar as migrations e depois rodar o serviço 
+Para rodar esta aplicação será necessário ter uma base postgres chamada <b>Teste</b>, instalar as dependências, executar as migrations e depois rodar o serviço 
 
 # Instalando as dependências
 ```bash
