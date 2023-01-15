@@ -1,6 +1,10 @@
 # Início
-Para rodar esta aplicação será necessário executar as migrations e depois rodar o serviço 
+Para rodar esta aplicação será necessário instalar as dependências, executar as migrations e depois rodar o serviço 
 
+# Instalando as dependências
+```bash
+$ npm install
+```
 
 # Executando migrations
 ```bash
