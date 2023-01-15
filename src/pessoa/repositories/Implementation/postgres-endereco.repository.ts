@@ -1,5 +1,4 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { Injectable, Inject } from "@nestjs/common";
 import { CreateEnderecoDto } from "src/pessoa/dto/create-endereco.dto";
 import { UpdateEnderecoDto } from "src/pessoa/dto/update-endereco.dto";
 import { Endereco } from "src/pessoa/entities/endereco.entity";
@@ -10,9 +9,10 @@ import { EnderecoRepository } from "../endereco.repository";
 @Injectable()
 export class PostgresEnderecoRepository extends EnderecoRepository{
     constructor(
-        @InjectRepository(Endereco) 
+        @Inject('ENDERECO_REPOSITORY') 
         private readonly enderecoRepository: Repository<Endereco>
     ){ super()}
+    
 
     async findAll(pessoa: Pessoa): Promise<Endereco[]> {
         return await this.enderecoRepository.findBy({pessoa: pessoa})

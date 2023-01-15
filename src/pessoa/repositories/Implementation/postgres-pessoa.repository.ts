@@ -1,5 +1,4 @@
-import { HttpException, Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { Injectable, Inject } from "@nestjs/common";
 import { CreatePessoaDto } from "src/pessoa/dto/create-pessoa.dto";
 import { UpdatePessoaDto } from "src/pessoa/dto/update-pessoa.dto";
 import { Pessoa } from "src/pessoa/entities/pessoa.entity";
@@ -9,7 +8,7 @@ import { PessoaRepository } from "../pessoa.repository";
 @Injectable()
 export class PostgresPessoaRepository extends PessoaRepository{
     constructor(
-        @InjectRepository(Pessoa)
+        @Inject('PESSOA_REPOSITORY') 
         private readonly pessoaRepository: Repository<Pessoa>
     ){super()}
     
