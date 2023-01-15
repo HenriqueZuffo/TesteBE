@@ -9,7 +9,7 @@ export class Endereco{
     id: number;
      
     @ManyToOne(() => Pessoa, (pessoa) => pessoa.enderecos, {nullable: false}) 
-    pessoa: number;
+    pessoa: Pessoa;
     
     @Column({length: 9, nullable: false})
     cep: string;

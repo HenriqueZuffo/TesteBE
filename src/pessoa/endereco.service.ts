@@ -1,23 +1,23 @@
 import { Injectable } from "@nestjs/common";
 import { CreateEnderecoDto } from "./dto/create-endereco.dto";
 import { UpdateEnderecoDto } from "./dto/update-endereco.dto";
+import { Pessoa } from "./entities/pessoa.entity";
 import { EnderecoRepository } from "./repositories/endereco.repository";
 
 @Injectable()
 export class EnderecoService{
     constructor(private readonly enderecoRepository: EnderecoRepository){}
     
-    async findAll(idPessoa: number){
-        return this.enderecoRepository.findAll(idPessoa)
+    async findAll(pessoa: Pessoa){
+        return this.enderecoRepository.findAll(pessoa)
     }
 
-    async findOne(idPessoa: number, idEndereco: number){
-        return this.enderecoRepository.findOne(idPessoa, idEndereco)
+    async findOne(pessoa: Pessoa, idEndereco: number){
+        return this.enderecoRepository.findOne(pessoa, idEndereco)
     }
     
-    async create(idPessoa: number, endereco: CreateEnderecoDto){
-        endereco.pessoa = idPessoa;
-
+    async create(pessoa: Pessoa, endereco: CreateEnderecoDto){
+        endereco.pessoa = pessoa;
         return this.enderecoRepository.create(endereco)
     }
 
@@ -25,7 +25,7 @@ export class EnderecoService{
         return this.enderecoRepository.update(idEndereco, endereco)
     }
 
-    async remove(idPessoa: number, idEndereco: number){
-        return this.enderecoRepository.remove(idPessoa, idEndereco)
+    async remove(pessoa: Pessoa, idEndereco: number){
+        return this.enderecoRepository.remove(pessoa, idEndereco)
     }
 }

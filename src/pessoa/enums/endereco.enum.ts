@@ -1,4 +1,4 @@
 export enum tipo_endereco{  
-    residencial,
-    comercial
+    residencial = 1,
+    comercial = 2
 }

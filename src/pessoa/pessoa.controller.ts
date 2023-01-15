@@ -4,6 +4,9 @@ import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { Response } from 'express';
 import { EnderecoService } from './endereco.service';
+import { CreateEnderecoDto } from './dto/create-endereco.dto';
+import { UpdateEnderecoDto } from './dto/update-endereco.dto';
+import { Pessoa } from './entities/pessoa.entity';
 
 @Controller('pessoa')
 export class PessoaController {
@@ -16,9 +19,9 @@ export class PessoaController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createPessoaDto: CreatePessoaDto, res: Response) {
     try{
-      const id = await this.pessoaService.create(createPessoaDto)
-      await createPessoaDto.enderecos?.map(async (end) => await this.enderecoService.create(id, end))
-      return id 
+      const pessoaCriada = await this.pessoaService.create(createPessoaDto)
+      createPessoaDto.enderecos?.map(async (end) => await this.enderecoService.create(pessoaCriada, end))
+      return pessoaCriada.id 
     }catch(err){
       res.status(HttpStatus.BAD_REQUEST).json(err)  
     }
@@ -32,22 +35,18 @@ export class PessoaController {
       throw new HttpException('Nenhuma pessoa foi encontrada!', HttpStatus.NOT_FOUND)
     }
 
-    pessoas.map(async(pessoa) => 
-      pessoa.enderecos = await this.enderecoService.findAll(pessoa.id)
-    )
-
     return pessoas
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number, res: Response) {
+  async findOne(@Param('id') id: number) {
     const pessoa = await this.pessoaService.findOne(id)
     
     if(!pessoa){
       throw new HttpException('Pessoa não encontrada!', HttpStatus.NOT_FOUND)      
     }
 
-    pessoa.enderecos = await this.enderecoService.findAll(pessoa.id)
+    pessoa.enderecos = await this.enderecoService.findAll(pessoa)
     return pessoa
   }
 
@@ -59,13 +58,14 @@ export class PessoaController {
       throw new HttpException('Pessoa informada inválida!', HttpStatus.NOT_FOUND)
     }
 
-    updatePessoaDto.enderecos?.map(async end => 
-      !end.id ? await this.enderecoService.create(id, end) : 
-        await this.enderecoService.update(end.id, end)
+    updatePessoaDto.enderecos?.map(async end =>{   
+      !end.id ? await this.enderecoService.create(pessoa, end as CreateEnderecoDto) : 
+      await this.enderecoService.update(end.id, end as UpdateEnderecoDto)
+    }
+      
     )    
-
+    
     await this.pessoaService.update(id, updatePessoaDto);
-
     return 
   }
 
@@ -77,7 +77,7 @@ export class PessoaController {
       throw new HttpException('Pessoa informada inválida!', HttpStatus.NOT_FOUND)
     }
     
-    pessoa.enderecos.map(async (end) => await this.enderecoService.remove(id, end.id))
+    pessoa.enderecos.map(async (end) => await this.enderecoService.remove(pessoa, end.id))
 
     return await this.pessoaService.remove(id);    
   }

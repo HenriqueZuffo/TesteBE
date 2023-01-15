@@ -2,47 +2,52 @@ import { IsEnum, IsNumber, IsString, IsNotEmpty, Length, IsOptional } from "clas
 import { tipo_endereco } from "../enums/endereco.enum";
 import { Utils } from "src/app.utils";
 import { Transform } from "class-transformer";
+import { Pessoa } from "../entities/pessoa.entity";
 
 
 export class CreateEnderecoDto{
-    
+    @IsOptional()
+    @IsNotEmpty({message: Utils.mensagemObrigatorio('Id do endereço')})
+    @IsNumber()
+    id?: number;   
+
+
     @IsOptional()
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Id da Pessoa')})
-    @IsNumber()
-    pessoa: number;
+    pessoa: Pessoa;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Cep')})
     @IsString()
     @Transform(({ value }) => Utils.apenasNumeros(value))
     @Length(9, 9, {message: 'Cep inválido'})
-    cep: string; 
+    cep?: string; 
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Logradouro')})
     @IsString()
-    logradouro: string;
+    logradouro?: string;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Número')})
     @IsNumber()
-    numero: number;
+    numero?: number;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Bairro')})
     @IsString()
-    bairro: string;
+    bairro?: string;
     
     @IsOptional()
     @IsString()
-    complemento: string;
+    complemento?: string;
      
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Cidade')})
     @IsString()
-    cidade: string;
+    cidade?: string;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Uf')})
     @IsString()
     @Length(2, 2, {message: 'Uf deve conter 2 caracteres'})
-    uf: string;
+    uf?: string;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Tipo de Endereço')})
     @IsEnum(tipo_endereco)
-    tipo: tipo_endereco;   
+    tipo?: tipo_endereco;   
 }

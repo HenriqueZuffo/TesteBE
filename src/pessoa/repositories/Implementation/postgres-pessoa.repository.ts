@@ -13,13 +13,12 @@ export class PostgresPessoaRepository extends PessoaRepository{
         private readonly pessoaRepository: Repository<Pessoa>
     ){super()}
     
-    async create(pessoa: CreatePessoaDto): Promise<number> {
-        const pessoa_criada = await this.pessoaRepository.save(pessoa)
-        return pessoa_criada.id
+    async create(pessoa: CreatePessoaDto): Promise<Pessoa> {
+        return await this.pessoaRepository.save(pessoa)
     }
     
     async findAll(): Promise<Pessoa[]> {        
-        return await this.pessoaRepository.find()
+        return await this.pessoaRepository.find({relations: ['enderecos']})
     }
     
     async findOne(id: number): Promise<Pessoa> {
@@ -27,7 +26,9 @@ export class PostgresPessoaRepository extends PessoaRepository{
     }
     
     async update(id: number, pessoa: UpdatePessoaDto): Promise<void> {
-        await this.pessoaRepository.update({id}, {...pessoa})
+        const { enderecos, ...resto } = pessoa;
+        if(!resto || !resto.id) return
+        await this.pessoaRepository.update({id}, {...resto})
         return 
     }
     

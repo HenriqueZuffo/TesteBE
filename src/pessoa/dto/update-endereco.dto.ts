@@ -2,15 +2,17 @@ import { IsEnum, IsNumber, IsString, IsNotEmpty, Length, IsOptional } from "clas
 import { Utils } from "src/app.utils";
 import { Transform } from "class-transformer";
 import { tipo_endereco } from "../enums/endereco.enum";
+import { Pessoa } from "../entities/pessoa.entity";
 
 export class UpdateEnderecoDto{
+    @IsOptional()
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Id do endereço')})
     @IsNumber()
-    id: number;
+    id?: number;
 
+    @IsOptional()
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Id da pessoa')})
-    @IsNumber()
-    pessoa: number;
+    pessoa: Pessoa;
 
     @IsOptional()
     @IsString()

@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CreateEnderecoDto } from "src/pessoa/dto/create-endereco.dto";
 import { UpdateEnderecoDto } from "src/pessoa/dto/update-endereco.dto";
 import { Endereco } from "src/pessoa/entities/endereco.entity";
+import { Pessoa } from "src/pessoa/entities/pessoa.entity";
 import { Repository } from "typeorm";
 import { EnderecoRepository } from "../endereco.repository";
 
@@ -13,11 +14,11 @@ export class PostgresEnderecoRepository extends EnderecoRepository{
         private readonly enderecoRepository: Repository<Endereco>
     ){ super()}
 
-    async findAll(idPessoa: number): Promise<Endereco[]> {
-        return this.enderecoRepository.find({where: {pessoa: idPessoa}})
+    async findAll(pessoa: Pessoa): Promise<Endereco[]> {
+        return await this.enderecoRepository.findBy({pessoa: pessoa})
     }
-    async findOne(idPessoa: number, idEndereco: number): Promise<Endereco> {
-        return this.enderecoRepository.findOne({where: {pessoa: idPessoa, id: idEndereco}})
+    async findOne(pessoa: Pessoa, idEndereco: number): Promise<Endereco> {
+        return this.enderecoRepository.findOne({where: {pessoa: pessoa, id: idEndereco}})
     }
     async create(endereco: CreateEnderecoDto): Promise<void> {
         await this.enderecoRepository.save(endereco)
@@ -27,8 +28,8 @@ export class PostgresEnderecoRepository extends EnderecoRepository{
         await this.enderecoRepository.update(idEndereco, {...endereco})
         return
     }
-    async remove(idPessoa: number, idEndereco: number): Promise<void>{
-        await this.enderecoRepository.delete({id: idEndereco, pessoa: idPessoa})
+    async remove(pessoa: Pessoa, idEndereco: number): Promise<void>{
+        await this.enderecoRepository.delete({id: idEndereco, pessoa: pessoa})
         return
     }
 
