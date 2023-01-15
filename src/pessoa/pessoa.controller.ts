@@ -72,13 +72,11 @@ export class PessoaController {
   @Delete(':id')
   async remove(@Param('id') id: number) {
     const pessoa = await this.pessoaService.findOne(id);
-    
+  
     if(!pessoa){
       throw new HttpException('Pessoa informada inválida!', HttpStatus.NOT_FOUND)
     }
-    
-    pessoa.enderecos.map(async (end) => await this.enderecoService.remove(pessoa, end.id))
-
+    await this.enderecoService.removeAll(pessoa);
     return await this.pessoaService.remove(id);    
   }
 }

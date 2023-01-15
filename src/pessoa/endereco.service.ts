@@ -28,4 +28,8 @@ export class EnderecoService{
     async remove(pessoa: Pessoa, idEndereco: number){
         return this.enderecoRepository.remove(pessoa, idEndereco)
     }
+
+    async removeAll(pessoa: Pessoa){
+        return this.enderecoRepository.removeAll(pessoa)
+    }
 }

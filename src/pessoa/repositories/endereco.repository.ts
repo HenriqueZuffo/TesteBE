@@ -11,4 +11,5 @@ export abstract class EnderecoRepository{
    abstract create(endereco: CreateEnderecoDto): Promise<void>;
    abstract update(idEndereco: number, endereco: UpdateEnderecoDto): Promise<void>;
    abstract remove(pessoa: Pessoa, idEndereco: number): Promise<void>;
+   abstract removeAll(pessoa: Pessoa): Promise<void>;
 }

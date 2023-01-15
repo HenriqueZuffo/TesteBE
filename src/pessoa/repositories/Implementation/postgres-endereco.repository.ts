@@ -32,5 +32,9 @@ export class PostgresEnderecoRepository extends EnderecoRepository{
         await this.enderecoRepository.delete({id: idEndereco, pessoa: pessoa})
         return
     }
+    async removeAll(pessoa: Pessoa): Promise<void>{
+        await this.enderecoRepository.delete({pessoa: pessoa})
+        return
+    }
 
 }
