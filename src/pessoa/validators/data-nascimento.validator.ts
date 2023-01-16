@@ -3,6 +3,7 @@ import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface 
 @ValidatorConstraint({name: 'DataNascimentoValidator', async: false})
 export class DataNascimentoValidator implements ValidatorConstraintInterface{
     validate(value: Date): boolean {
+        if(!value) return false
         return value < new Date() ? true : false
     }
     

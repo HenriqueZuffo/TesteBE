@@ -4,6 +4,7 @@ import { Endereco } from "../entities/endereco.entity";
 @ValidatorConstraint({name: 'EnderecoValidator', async: false})
 export class EnderecoValidator implements ValidatorConstraintInterface{
     validate(value: Endereco[]): boolean {
+        if(!value) return false
         return value.length > 0 ? true : false
     }
     

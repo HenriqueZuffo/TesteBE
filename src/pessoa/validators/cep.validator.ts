@@ -5,6 +5,7 @@ import { Utils } from "src/app.utils";
 export class CepValidator implements ValidatorConstraintInterface{
     
     validate(value: string): boolean {
+        if(!value) return false
         return Utils.apenasNumeros(value).length == 9 ? true : false
     }
 

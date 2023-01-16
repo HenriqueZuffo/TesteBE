@@ -25,6 +25,7 @@ export class PessoaService {
 
   async update(id: number, updatePessoaDto: UpdatePessoaDto) {
     if(updatePessoaDto?.identificacao) updatePessoaDto.identificacao = Utils.apenasNumeros(updatePessoaDto.identificacao) 
+    if(!updatePessoaDto.id) updatePessoaDto.id = id
 
     return this.pessoaRepository.update(id, updatePessoaDto);
   }

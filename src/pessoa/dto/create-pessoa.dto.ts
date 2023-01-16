@@ -1,4 +1,4 @@
-import { IsDate, IsEnum, IsNotEmpty, IsString, Validate, MinLength, ValidateNested } from "class-validator";
+import { IsDate, IsEnum, IsNotEmpty, IsString, Validate, MinLength, ValidateNested, MaxLength, Length } from "class-validator";
 import { Endereco } from "../entities/endereco.entity";
 import { tipo_pessoa } from "../enums/pessoa.enum";
 import { DataNascimentoValidator } from "../validators/data-nascimento.validator";
@@ -17,7 +17,7 @@ export class CreatePessoaDto {
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Identificação')})
     @IsString()
     @Transform(({ value }) => Utils.apenasNumeros(value))
-    @Validate(identificacaoValidator)    
+    @Validate(identificacaoValidator)   
     identificacao: string;
     
     @IsNotEmpty({message: Utils.mensagemObrigatorio('Tipo Pessoa')})
