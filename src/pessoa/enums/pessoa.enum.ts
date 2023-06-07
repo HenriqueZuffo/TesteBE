@@ -1,4 +1,4 @@
-export enum tipo_pessoa{
-    fisica = 1,
-    juridica = 2
+export enum tipo_pessoa {
+  fisica = 1,
+  juridica = 2,
 }

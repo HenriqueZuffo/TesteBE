@@ -1,24 +1,24 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { tipo_pessoa } from "../enums/pessoa.enum";
-import { Endereco } from "./endereco.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { tipo_pessoa } from '../enums/pessoa.enum';
+import { Endereco } from './endereco.entity';
 
 @Entity()
 export class Pessoa {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({length: 150, nullable: false})
-    nome: string;
-    
-    @Column({length: 14, nullable: false})
-    identificacao: string;
-    
-    @Column({nullable: false})
-    tipo: tipo_pessoa;
-    
-    @Column({nullable: false})
-    data_nascimento: Date;
-    
-    @OneToMany(() => Endereco, (endereco) => endereco.pessoa)
-    enderecos: Endereco[];
+  @Column({ length: 150, nullable: false })
+  nome: string;
+
+  @Column({ length: 14, nullable: false })
+  identificacao: string;
+
+  @Column({ nullable: false })
+  tipo: tipo_pessoa;
+
+  @Column({ nullable: false })
+  data_nascimento: Date;
+
+  @OneToMany(() => Endereco, (endereco) => endereco.pessoa)
+  enderecos: Endereco[];
 }

@@ -1,4 +1,4 @@
-import { ConsoleLogger, HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Utils } from 'src/app.utils';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
@@ -6,12 +6,13 @@ import { PessoaRepository } from './repositories/pessoa.repository';
 
 @Injectable()
 export class PessoaService {
-
-  constructor(private readonly pessoaRepository: PessoaRepository){};
+  constructor(private readonly pessoaRepository: PessoaRepository) {}
 
   async create(createPessoaDto: CreatePessoaDto) {
-    createPessoaDto.identificacao = Utils.apenasNumeros(createPessoaDto.identificacao)
-    
+    createPessoaDto.identificacao = Utils.apenasNumeros(
+      createPessoaDto.identificacao,
+    );
+
     return this.pessoaRepository.create(createPessoaDto);
   }
 
@@ -24,8 +25,11 @@ export class PessoaService {
   }
 
   async update(id: number, updatePessoaDto: UpdatePessoaDto) {
-    if(updatePessoaDto?.identificacao) updatePessoaDto.identificacao = Utils.apenasNumeros(updatePessoaDto.identificacao) 
-    if(!updatePessoaDto.id) updatePessoaDto.id = id
+    if (updatePessoaDto?.identificacao)
+      updatePessoaDto.identificacao = Utils.apenasNumeros(
+        updatePessoaDto.identificacao,
+      );
+    if (!updatePessoaDto.id) updatePessoaDto.id = id;
 
     return this.pessoaRepository.update(id, updatePessoaDto);
   }

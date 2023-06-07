@@ -12,17 +12,18 @@ import { pessoaProviders } from './pessoa.providers';
 @Module({
   imports: [DatabaseModule],
   controllers: [PessoaController],
-  providers: [PessoaService, 
+  providers: [
+    PessoaService,
     {
       provide: PessoaRepository,
-      useClass: PostgresPessoaRepository
+      useClass: PostgresPessoaRepository,
     },
     {
       provide: EnderecoRepository,
-      useClass: PostgresEnderecoRepository
+      useClass: PostgresEnderecoRepository,
     },
-    EnderecoService, 
-    ...pessoaProviders
-  ]
+    EnderecoService,
+    ...pessoaProviders,
+  ],
 })
 export class PessoaModule {}
